@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relay Control</title>
+</head>
+<body>
+    <h1>Control Relays</h1>
+    <button onclick="updateRelayState(1, 1)">Relay 1 ON</button>
+    <button onclick="updateRelayState(1, 0)">Relay 1 OFF</button>
+    <br>
+    <button onclick="updateRelayState(2, 1)">Relay 2 ON</button>
+    <button onclick="updateRelayState(2, 0)">Relay 2 OFF</button>
+    <br>
+    <button onclick="updateRelayState(3, 1)">Relay 3 ON</button>
+    <button onclick="updateRelayState(3, 0)">Relay 3 OFF</button>
+
+    <script>
+        function updateRelayState(relay, state) {
+            var xhr = new XMLHttpRequest();
+            var url = `https://api.thingspeak.com/update?api_key=7LL4GMOY6KTGQCM6&field${relay}=${state}`;
+            xhr.open("GET", url, true);
+            xhr.send();
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    alert('Relay updated successfully!');
+                } else {
+                    alert('Error updating relay.');
+                }
+            };
+        }
+    </script>
+</body>
+</html>
